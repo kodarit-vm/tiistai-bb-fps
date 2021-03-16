@@ -11,8 +11,12 @@ public class playerMovement : MonoBehaviour
     private float jumpHeight = 5f;
 
     public Transform groundCheck;
-    private float groundDistance = 0.2f;
+    private float groundDistance = 0.4f;
     private bool isGrounded;
+
+    public LayerMask ground;
+
+    private Vector3 velocity;
 
     // Start is called before the first frame update
     void Start()
@@ -24,6 +28,8 @@ public class playerMovement : MonoBehaviour
     void Update()
     {
 
+        isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, ground);
+
         float xAxis = Input.GetAxis("Horizontal");
         float zAxis = Input.GetAxis("Vertical");
 
@@ -31,6 +37,19 @@ public class playerMovement : MonoBehaviour
 
         controller.Move(move * moveSpeed * Time.deltaTime);
 
+        velocity.y += gravity * Time.deltaTime;
+        controller.Move(velocity * Time.deltaTime);
 
+        if (Input.GetButtonDown("Jump") && isGrounded)
+        {
+            velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+        }
+      
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(groundCheck.position, groundDistance);
     }
 }
