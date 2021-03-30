@@ -6,7 +6,7 @@ public class playerMovement : MonoBehaviour
 {
     private CharacterController controller;
 
-    private float moveSpeed = 8f;
+    private float moveSpeed = 8f, runSpeed = 1.8f;
     private float gravity = -9.81f;
     private float jumpHeight = 5f;
 
@@ -35,14 +35,21 @@ public class playerMovement : MonoBehaviour
 
         Vector3 move = transform.right * xAxis + transform.forward * zAxis;
 
-        controller.Move(move * moveSpeed * Time.deltaTime);
-
         velocity.y += gravity * Time.deltaTime;
         controller.Move(velocity * Time.deltaTime);
 
         if (Input.GetButtonDown("Jump") && isGrounded)
         {
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+        }
+
+        if (Input.GetButton("Fire3"))
+        {
+            controller.Move(move * moveSpeed * runSpeed * Time.deltaTime);
+        }
+        else
+        {
+            controller.Move(move * moveSpeed * Time.deltaTime);
         }
       
     }

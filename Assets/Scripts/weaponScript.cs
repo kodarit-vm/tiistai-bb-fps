@@ -10,7 +10,7 @@ public class weaponScript : MonoBehaviour
     private float startTime;
 
     public GameObject prefab;
-    public GameObject sphere;
+    private GameObject sphere;
 
     Camera FPScamera;
 
@@ -37,7 +37,13 @@ public class weaponScript : MonoBehaviour
 
     private void Shoot(float force)
     {
-        
+        if (sphere != null)
+        {
+            Destroy(sphere);
+        }
+
+        sphere = Instantiate(prefab, transform.position, Quaternion.identity);
+        sphere.GetComponent<Rigidbody>().AddForce(FPScamera.transform.forward * force, ForceMode.Impulse);
     }
 
     private float CalculateForce(float holdDownTime)
