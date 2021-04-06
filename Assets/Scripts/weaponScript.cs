@@ -14,6 +14,9 @@ public class weaponScript : MonoBehaviour
 
     Camera FPScamera;
 
+    public float range = 10f;
+    public float pushForce = 25f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -27,11 +30,32 @@ public class weaponScript : MonoBehaviour
         {
             startTime = Time.time;
         }
+
         if (Input.GetButtonUp("Fire1"))
         {
             float endTime = Time.time;
             float force = CalculateForce(endTime - startTime);
             Shoot(force);
+        }
+
+        if (Input.GetButtonDown("Fire2"))
+        {
+            ProcessRaycast();
+        }
+    }
+
+    private void ProcessRaycast()
+    {
+        RaycastHit hit;
+        if (Physics.Raycast(FPScamera.transform.position, FPScamera.transform.forward, out hit, range))
+        {
+            Rigidbody rb = hit.collider.gameObject.GetComponent<Rigidbody>();
+            if (rb == null)
+            {
+                return;
+            }
+
+            rb.AddForce(FPScamera.transform.forward * pushForce, ForceMode.Impulse);
         }
     }
 
