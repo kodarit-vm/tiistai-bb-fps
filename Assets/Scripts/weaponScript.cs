@@ -16,7 +16,7 @@ public class weaponScript : MonoBehaviour
 
     public float range = 10f;
     public float pushForce = 25f;
-
+    
     // Start is called before the first frame update
     void Start()
     {

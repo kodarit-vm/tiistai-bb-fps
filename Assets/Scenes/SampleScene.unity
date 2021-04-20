@@ -169,6 +169,8 @@ MonoBehaviour:
   throwForce: 40
   maxThrowForce: 4
   prefab: {fileID: 187298895609126614, guid: 071c11bf780c3624c836940531a79b1d, type: 3}
+  range: 10
+  pushForce: 25
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
