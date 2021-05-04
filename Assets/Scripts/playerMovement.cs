@@ -19,6 +19,9 @@ public class playerMovement : MonoBehaviour
 
     private Vector3 velocity;
     private Vector3 move;
+
+    public doorController dc;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -38,6 +41,11 @@ public class playerMovement : MonoBehaviour
 
         velocity.y += gravity * Time.deltaTime;
         controller.Move(velocity * Time.deltaTime);
+
+        if (Input.GetButtonDown("Fire2"))
+        {
+            dc.OpenDoor();
+        }
 
         if (Input.GetButtonDown("Jump") && isGrounded)
         {
